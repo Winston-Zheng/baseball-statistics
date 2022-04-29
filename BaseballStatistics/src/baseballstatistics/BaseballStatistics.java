@@ -1,7 +1,5 @@
 /*
-Name: Winston Zheng
-Date:
-Purpose:
+Team members: Winston Zheng
  */
 
 public class BaseballStatistics {
