@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package baseballstatistics;
 
-/**
- *
- * @author raybu
- */
+
 public class Pitcher {
     // BRENDEN RAYBURN
     // Create a Pitcher class for the batting statistics for a player on the team.
