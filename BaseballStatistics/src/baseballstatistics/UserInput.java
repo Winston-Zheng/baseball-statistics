@@ -6,9 +6,11 @@ package baseballstatistics;
 
 // B.R. 4/27/2022 - Finished the first draft for the GUI elements.
 // still needs input to be verified and proper submit method.
-// CODE TO CAll CLASS
+
+// **CODE TO CAll CLASS**
 // Application.launch(UserInput.class, args)
 
+import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,8 +36,8 @@ public class UserInput extends Application {
     private TextField runsBattedInField;
     private TextField basesOnBallsField;
     private TextField strikeOutsField;
-    private TextField putOutsField;
-    private TextField assistsField;
+    //private TextField putOutsField;
+    //private TextField assistsField;
     private TextField leftOnBaseField;
     
     @Override
@@ -52,7 +54,10 @@ public class UserInput extends Application {
         DatePicker datePicker = new DatePicker();
         HBox datebox = new HBox(datePicker);
         
-        Scene scene = new Scene(grid, 350, 510);
+        //**CODE TO GRAB DATE VALUE**
+        //LocalDate date = datePicker.getValue();
+        
+        Scene scene = new Scene(grid, 350, 450);
         
         grid.add(new Label("Date of game: "), 0, 0);
         grid.add(datebox, 1, 0);
@@ -93,17 +98,18 @@ public class UserInput extends Application {
         strikeOutsField = new TextField();
         grid.add(strikeOutsField, 1, 9);
         
-        grid.add(new Label("Put outs (po): "), 0, 10);
-        putOutsField = new TextField();
-        grid.add(putOutsField, 1, 10);
+        // ** B.R. COMMENTED OUT ASSITS AND PUT OUTS, NOT NEEDED FOR BATTING STATS **
+        //grid.add(new Label("Put outs (po): "), 0, 10);
+        //putOutsField = new TextField();
+        //grid.add(putOutsField, 1, 10);
         
-        grid.add(new Label("Assists (a): "), 0, 11);
-        assistsField = new TextField();
-        grid.add(assistsField, 1, 11);
+        //grid.add(new Label("Assists (a): "), 0, 11);
+        //assistsField = new TextField();
+        //grid.add(assistsField, 1, 11);
         
-        grid.add(new Label("Left on base (lob): "), 0, 12);
+        grid.add(new Label("Left on base (lob): "), 0, 10);
         leftOnBaseField = new TextField();
-        grid.add(leftOnBaseField, 1, 12);
+        grid.add(leftOnBaseField, 1, 10);
         
         // Button handler
         Button Submit = new Button("Submit");
@@ -116,7 +122,7 @@ public class UserInput extends Application {
         buttonBox.getChildren().add(Submit);
         buttonBox.getChildren().add(exitButton);
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-        grid.add(buttonBox, 0, 13, 2, 1);
+        grid.add(buttonBox, 0, 11, 2, 1);
         
         primaryStage.setScene(scene);
         primaryStage.show();

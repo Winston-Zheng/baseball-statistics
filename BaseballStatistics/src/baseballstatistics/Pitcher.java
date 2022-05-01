@@ -11,9 +11,10 @@ package baseballstatistics;
  */
 public class Pitcher {
     // BRENDEN RAYBURN
-    //Create a Pitcher class for the batting statistics for a player on the team.
+    // Create a Pitcher class for the batting statistics for a player on the team.
     // Statistics to be tracked:
     
+    private String gameDate;
     // Uniform Number
     private int number;
     // First and Last name
@@ -31,14 +32,18 @@ public class Pitcher {
     private int basesOnBalls;
     // SO
     private int strikeOuts;
+    
+    // Put outs and Assists commented out, not needed for BATTING statistics
     // PO
-    private int putOuts;
+    // private int putOuts;
     // A 
-    private int assists;
+    // private int assists;
+    
     // LOB
     private int leftOnBase;
     
-    public Pitcher(int number, String fName, String lName, int atBat, int runs, int hits, int runsBattedIn, int basesOnBalls, int strikeOuts, int putOuts, int assists, int leftOnBase) {
+    public Pitcher(String gameDate, int number, String fName, String lName, int atBat, int runs, int hits, int runsBattedIn, int basesOnBalls, int strikeOuts, int putOuts, int assists, int leftOnBase) {
+        this.gameDate = gameDate;
         this.number = number;
         this.fName = fName;
         this.lName = lName;
@@ -48,9 +53,16 @@ public class Pitcher {
         this.runsBattedIn = runsBattedIn;
         this.basesOnBalls = basesOnBalls;
         this.strikeOuts = strikeOuts;
-        this.putOuts = putOuts;
-        this.assists = assists;
+        //this.putOuts = putOuts;
+        //this.assists = assists;
         this.leftOnBase = leftOnBase;
+    }
+    
+    public String getGameDate() {
+        return gameDate;
+    }
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
     }
     
     public int getNumber() {
@@ -124,7 +136,7 @@ public class Pitcher {
     }
     
     
-    public int getPutOuts() {
+    /*public int getPutOuts() {
         return putOuts;
     }
     public void setPutOuts(int putOuts) {
@@ -137,7 +149,7 @@ public class Pitcher {
     }
     public void setAssists(int assists) {
         this.assists = assists;
-    }
+    } */
     
     
     public int getLeftOnBase() {
