@@ -2,6 +2,7 @@ package baseballstatistics;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -85,6 +86,34 @@ public class PitcherSQL {
         }
         return false;
     }
+    
+    public static void addPitcherData(String fileName, String fName, String lName, int uniformNum, 
+            int timesAtBat, int runs, int hits, int runsBattedIn, int basesOnBalls, 
+            int strikeOuts, int putOuts, int assists, int leftOnBase) {
+        // Function to add data into table
+        
+        String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
+                + "Times_at_bat, Runs, Hits, Runs_batted_in, Bases_on_balls, Strike_outs,"
+                + "Put_outs, Assists, Left_on_base)"
+                + "VALUES ('" + fName + "', '" + lName + "', '" + uniformNum + "', "
+                + "'" + timesAtBat + "', '" + runs + "', '" + hits + "', '" + runsBattedIn + "', "
+                + "'" + basesOnBalls + "', '" + strikeOuts + "', '" + putOuts + "', '" + assists + "', "
+                + "'" + leftOnBase + "')"; 
+        
+        Connection connection;
+        try {
+            String dbUrl = "jdbc:sqlite:" + fileName;
+            connection = DriverManager.getConnection(dbUrl); 
+            
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            
+            
+        } catch (SQLException e) {
+            System.err.println(e);
+            return;
+        }
+    }
 }
 
 
@@ -93,4 +122,10 @@ public class PitcherSQL {
  * Dorian Earl
  * 4/29/2022
  * Created file, added createDatabase, getConnection, and disconnect functions.
+ */
+
+/*
+ * Dorian Earl
+ * 5/1/2022
+ * Created addPitcherData function.
  */
