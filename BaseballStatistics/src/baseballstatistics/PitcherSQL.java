@@ -36,8 +36,6 @@ public class PitcherSQL {
                 + "Runs_batted_in   INTEGER,"
                 + "Bases_on_balls   INTEGER,"
                 + "Strike_outs      INTEGER,"
-                + "Put_outs         INTEGER,"
-                + "Assists          INTEGER,"
                 + "Left_on_base     INTEGER"
                 + ");";
         try {
@@ -89,7 +87,7 @@ public class PitcherSQL {
     
     public static void addPitcherData(String fileName, String fName, String lName, int uniformNum, 
             int timesAtBat, int runs, int hits, int runsBattedIn, int basesOnBalls, 
-            int strikeOuts, int putOuts, int assists, int leftOnBase) {
+            int strikeOuts, int leftOnBase) {
         // Function to add data into table
         
         String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
@@ -97,7 +95,7 @@ public class PitcherSQL {
                 + "Put_outs, Assists, Left_on_base)"
                 + "VALUES ('" + fName + "', '" + lName + "', '" + uniformNum + "', "
                 + "'" + timesAtBat + "', '" + runs + "', '" + hits + "', '" + runsBattedIn + "', "
-                + "'" + basesOnBalls + "', '" + strikeOuts + "', '" + putOuts + "', '" + assists + "', "
+                + "'" + basesOnBalls + "', '" + strikeOuts + "', "
                 + "'" + leftOnBase + "')"; 
         
         Connection connection;
@@ -128,4 +126,10 @@ public class PitcherSQL {
  * Dorian Earl
  * 5/1/2022
  * Created addPitcherData function.
+ */
+
+/*
+ * Dorian Earl
+ * 5/3/2022
+ * Updated addPitcherData function to remove assists and Put Outs.
  */
