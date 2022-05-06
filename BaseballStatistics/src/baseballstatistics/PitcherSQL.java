@@ -1,8 +1,8 @@
 package baseballstatistics;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,16 +11,24 @@ public class PitcherSQL {
     public static void createDatabase(String fileName) {
         // Function to create a new database
         
-        String dbUrl = "jdbc:sqlite:" + fileName;
+        File dbFile = new File(fileName + ".sqlite");
         
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl);
-            if (connection != null) {
-                System.out.println("Database has been created.");
-                createTable(fileName);
+        if (!dbFile.exists()) {
+            
+            String dbUrl = "jdbc:sqlite:" + fileName + ".sqlite";
+        
+            try {
+                Connection connection = DriverManager.getConnection(dbUrl);
+                if (connection != null) {
+                    System.out.println("Database has been created.");
+                    createTable(fileName);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        }
+        else {
+            System.out.println("File already exists!");
         }
     }
     
@@ -39,7 +47,7 @@ public class PitcherSQL {
                 + "Left_on_base     INTEGER"
                 + ");";
         try {
-            String dbUrl = "jdbc:sqlite:" + fileName;
+            String dbUrl = "jdbc:sqlite:" + fileName + ".sqlite";
             Connection connection = DriverManager.getConnection(dbUrl); 
             
             Statement statement = connection.createStatement();
@@ -59,7 +67,7 @@ public class PitcherSQL {
         Connection connection = null;
         try
         {
-            String dbUrl = "jdbc:sqlite:" + fileName;
+            String dbUrl = "jdbc:sqlite:" + fileName + ".sqlite";
             connection = DriverManager.getConnection(dbUrl);
             return connection;
         }
@@ -75,7 +83,7 @@ public class PitcherSQL {
         // Function to disconnect from database
         try {
             // On a successful shutdown, this throws an exception
-            String shutdownURL = "jdbc:sqlite:" + fileName + ";shutdown=true";
+            String shutdownURL = "jdbc:sqlite:" + fileName + ".sqlite;shutdown=true";
             DriverManager.getConnection(shutdownURL);
         }
         catch (SQLException e) {
@@ -100,7 +108,7 @@ public class PitcherSQL {
         
         Connection connection;
         try {
-            String dbUrl = "jdbc:sqlite:" + fileName;
+            String dbUrl = "jdbc:sqlite:" + fileName + ".sqlite";
             connection = DriverManager.getConnection(dbUrl); 
             
             Statement statement = connection.createStatement();
@@ -132,4 +140,10 @@ public class PitcherSQL {
  * Dorian Earl
  * 5/3/2022
  * Updated addPitcherData function to remove assists and Put Outs.
+ */
+
+/*
+ * Dorian Earl
+ * 5/5/2022
+ * Added file validation, and made it easier to use all functions.
  */
