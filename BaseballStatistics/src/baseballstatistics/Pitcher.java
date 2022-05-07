@@ -9,46 +9,42 @@ public class Pitcher {
     
     private String gameDate;
     // Uniform Number
-    private int number;
+    private int uniformNumber;
     // First and Last name
     private String fName;
     private String lName;
-    // AB
-    private int atBat;
-    // R
-    private int runs;
+    // IP
+    private double inningsPitched;
     // H
     private int hits;
-    // RBI
-    private int runsBattedIn;
+    // R
+    private int runs;
+    // ER
+    private int earnedRuns;
     // BB
     private int basesOnBalls;
     // SO
     private int strikeOuts;
+    // BF
+    private int battersFaced;
+    // PC/NP
+    private int numOfPitches;
     
-    // Put outs and Assists commented out, not needed for BATTING statistics
-    // PO
-    // private int putOuts;
-    // A 
-    // private int assists;
-    
-    // LOB
-    private int leftOnBase;
-    
-    public Pitcher(String gameDate, int number, String fName, String lName, int atBat, int runs, int hits, int runsBattedIn, int basesOnBalls, int strikeOuts, int putOuts, int assists, int leftOnBase) {
+    public Pitcher(String gameDate, int uniformNumber, String fName, 
+            String lName, double inningsPitched, int hits, int runs, int earnedRuns,
+            int basesOnBalls, int strikeOuts, int battersFaced, int numOfPitches) {
         this.gameDate = gameDate;
-        this.number = number;
+        this.uniformNumber = uniformNumber;
         this.fName = fName;
         this.lName = lName;
-        this.atBat = atBat;
-        this.runs = runs;
+        this.inningsPitched = inningsPitched;
         this.hits = hits;
-        this.runsBattedIn = runsBattedIn;
+        this.runs = runs;
+        this.earnedRuns = earnedRuns;
         this.basesOnBalls = basesOnBalls;
         this.strikeOuts = strikeOuts;
-        //this.putOuts = putOuts;
-        //this.assists = assists;
-        this.leftOnBase = leftOnBase;
+        this.battersFaced = battersFaced;
+        this.numOfPitches = numOfPitches;
     }
     
     public String getGameDate() {
@@ -59,10 +55,10 @@ public class Pitcher {
     }
     
     public int getNumber() {
-        return number;
+        return uniformNumber;
     }
     public void setNumber(int number) {
-        this.number = number;
+        this.uniformNumber = number;
     }
     
     public String getFName() {
@@ -72,7 +68,6 @@ public class Pitcher {
         this.fName = fName;
     }
     
-    
     public String getLName() {
         return lName;
     }
@@ -80,22 +75,12 @@ public class Pitcher {
         this.lName = lName;
     }
     
-    
-    public int getAtBat() {
-        return atBat;
+    public double getInningsPitched() {
+        return inningsPitched;
     }
-    public void setAtBat(int atBat) {
-        this.atBat = atBat;
+    public void setInningsPitched(double inningsPitched) {
+        this.inningsPitched = inningsPitched;
     }
-    
-    
-    public int getRuns() {
-        return runs;
-    }
-    public void setRuns(int runs) {
-        this.runs = runs;
-    }
-    
     
     public int getHits() {
         return hits;
@@ -104,15 +89,20 @@ public class Pitcher {
         this.hits = hits;
     }
     
-    
-    public int getRunsBattedIn() {
-        return runsBattedIn;
+    public int getRuns() {
+        return runs;
     }
-    public void setRunsBattedIn(int runsBattedIn) {
-        this.runsBattedIn = runsBattedIn;
+    public void setRuns(int runs) {
+        this.runs = runs;
     }
     
-    
+    public int getEarnedRuns() {
+        return earnedRuns;
+    }
+    public void setEarnedRuns(int earnedRuns) {
+        this.earnedRuns = earnedRuns;
+    }
+        
     public int getBasesOnBalls() {
         return basesOnBalls;
     }
@@ -120,36 +110,25 @@ public class Pitcher {
         this.basesOnBalls = basesOnBalls;
     }
     
-    
     public int getStrikeOuts() {
         return strikeOuts;
     }
     public void setStrikeOuts(int strikeOuts) {
         this.strikeOuts = strikeOuts;
     }
-    
-    
-    /*public int getPutOuts() {
-        return putOuts;
+
+    public int getBattersFaced() {
+        return battersFaced;
     }
-    public void setPutOuts(int putOuts) {
-        this.putOuts = putOuts;
+    public void setBattersFaced(int battersFaced) {
+        this.battersFaced = battersFaced;
     }
     
-    
-    public int getAssists() {
-        return assists;
+    public int getNumOfPitches() {
+        return numOfPitches;
     }
-    public void setAssists(int assists) {
-        this.assists = assists;
-    } */
-    
-    
-    public int getLeftOnBase() {
-        return leftOnBase;
-    }
-    public void setLeftOnBase(int leftOnBase) {
-        this.leftOnBase = leftOnBase;
+    public void setNumOfPitches(int numOfPitches) {
+        this.numOfPitches = numOfPitches;
     }
     
 }
