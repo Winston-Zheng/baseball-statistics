@@ -22,26 +22,29 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 public class UserInput extends Application {
 
     private TextField numberField;
     private TextField fNameField;
     private TextField lNameField;
-    private TextField atBatField;
+    private TextField inningsPitched;
     private TextField runsField;
     private TextField hitsField;
-    private TextField runsBattedInField;
+    private TextField earnedRuns;
     private TextField basesOnBallsField;
+    private TextField numPitchesField;
     private TextField strikeOutsField;
+    private DatePicker datePicker = new DatePicker();
     // private TextField putOutsField;
     // private TextField assistsField;
-    private TextField leftOnBaseField;
+    private TextField battersFacedField;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Player Batting Stats");
+        primaryStage.setTitle("Pitcher Stats");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
@@ -49,13 +52,10 @@ public class UserInput extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
 
-        DatePicker datePicker = new DatePicker();
         HBox datebox = new HBox(datePicker);
+        // dateField.setText(STYLESHEET_MODENA); = datebox;
 
-        // **CODE TO GRAB DATE VALUE**
-        // LocalDate date = datePicker.getValue();
-
-        Scene scene = new Scene(grid, 350, 450);
+        Scene scene = new Scene(grid, 350, 475);
 
         grid.add(new Label("Date of game: "), 0, 0);
         grid.add(datebox, 1, 0);
@@ -72,9 +72,9 @@ public class UserInput extends Application {
         numberField = new TextField();
         grid.add(numberField, 1, 3);
 
-        grid.add(new Label("Times at bat (ab): "), 0, 4);
-        atBatField = new TextField();
-        grid.add(atBatField, 1, 4);
+        grid.add(new Label("Innings Pitched (ip): "), 0, 4);
+        inningsPitched = new TextField();
+        grid.add(inningsPitched, 1, 4);
 
         grid.add(new Label("Runs (r): "), 0, 5);
         runsField = new TextField();
@@ -84,17 +84,21 @@ public class UserInput extends Application {
         hitsField = new TextField();
         grid.add(hitsField, 1, 6);
 
-        grid.add(new Label("Runs batted in (rbi): "), 0, 7);
-        runsBattedInField = new TextField();
-        grid.add(runsBattedInField, 1, 7);
+        grid.add(new Label("Earned Runs (er): "), 0, 7);
+        earnedRuns = new TextField();
+        grid.add(earnedRuns, 1, 7);
 
         grid.add(new Label("Bases on balls (bb): "), 0, 8);
         basesOnBallsField = new TextField();
         grid.add(basesOnBallsField, 1, 8);
-
-        grid.add(new Label("Strike outs (so): "), 0, 9);
+        
+        grid.add(new Label("Number of pitches (pc/np): "), 0, 9);
+        numPitchesField = new TextField();
+        grid.add(numPitchesField, 1, 9);
+        
+        grid.add(new Label("Strike Outs (so): "), 0, 10);
         strikeOutsField = new TextField();
-        grid.add(strikeOutsField, 1, 9);
+        grid.add(strikeOutsField, 1, 10);
 
         // ** B.R. COMMENTED OUT ASSITS AND PUT OUTS, NOT NEEDED FOR BATTING STATS **
         // grid.add(new Label("Put outs (po): "), 0, 10);
@@ -105,9 +109,9 @@ public class UserInput extends Application {
         // assistsField = new TextField();
         // grid.add(assistsField, 1, 11);
 
-        grid.add(new Label("Left on base (lob): "), 0, 10);
-        leftOnBaseField = new TextField();
-        grid.add(leftOnBaseField, 1, 10);
+        grid.add(new Label("Batters faced (bf): "), 0, 11);
+        battersFacedField = new TextField();
+        grid.add(battersFacedField, 1, 11);
 
         // Button handler
         Button Submit = new Button("Submit");
@@ -120,18 +124,87 @@ public class UserInput extends Application {
         buttonBox.getChildren().add(Submit);
         buttonBox.getChildren().add(exitButton);
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-        grid.add(buttonBox, 0, 11, 2, 1);
+        grid.add(buttonBox, 0, 12, 2, 1);
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
+    
 
     private void submitButtonClicked() {
-
+        LocalDate date = datePicker.getValue();
+        if ( date == null || numberField.getText().isEmpty() ||
+                fNameField.getText().isEmpty() || lNameField.getText().isEmpty() ||
+                inningsPitched.getText().isEmpty() || runsField.getText().isEmpty() ||
+                hitsField.getText().isEmpty() || earnedRuns.getText().isEmpty() ||
+                basesOnBallsField.getText().isEmpty() || numPitchesField.getText().isEmpty() ||
+                strikeOutsField.getText().isEmpty() || battersFacedField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please add data to all fields.");
+        }
+        else {
+           if(!isInt(numberField, "You must enter a positive whole number")) { 
+                numberField.requestFocus();
+           } else if(!isDouble(inningsPitched, "You must enter a positive number")) { 
+                inningsPitched.requestFocus();
+           } else if(!isInt(runsField, "You must enter a positive whole number")) { 
+                runsField.requestFocus();
+           } else  if(!isInt(hitsField, "You must enter a positive whole number")) { 
+                hitsField.requestFocus();
+           } else if(!isInt(earnedRuns, "You must enter a positive whole number")) { 
+                earnedRuns.requestFocus();
+           } else if(!isInt(basesOnBallsField, "You must enter a positive whole number")) { 
+                basesOnBallsField.requestFocus();
+           } else if(!isInt(numPitchesField, "You must enter a positive whole number")) {
+               numPitchesField.requestFocus();
+           } else if(!isInt(strikeOutsField, "You must enter a positive whole number")) { 
+                strikeOutsField.requestFocus();
+           } else if(!isInt(battersFacedField, "You must enter a positive whole number")) { 
+                battersFacedField.requestFocus();
+           } else {
+               String dateString = date.toString();
+               JOptionPane.showMessageDialog(null, "All data Valid!");
+               PitcherSQL.createDatabase(dateString);
+           }
+           
+        }
     }
 
     private void exitButtonClicked() {
         System.exit(0);
+    }
+    
+    private boolean isInt(TextField f, String msg) { 
+        try { 
+            int i = Integer.parseInt(f.getText());
+            if (i >= 0) {
+                return true;
+            }
+            else {
+                JOptionPane.showMessageDialog(null,(msg));
+                return false;
+            }
+        } 
+        catch (NumberFormatException e) { 
+            JOptionPane.showMessageDialog(null,(msg)); 
+            return false; 
+        } 
+    }
+    
+    private boolean isDouble(TextField f, String msg) { 
+        try { 
+            double i = Double.parseDouble(f.getText());
+            if (i >= 0) {
+                return true;
+            }
+            else {
+                JOptionPane.showMessageDialog(null,(msg));
+                return false;
+            }
+        } 
+        catch (NumberFormatException e) { 
+            JOptionPane.showMessageDialog(null,(msg)); 
+            return false; 
+        } 
     }
 }
