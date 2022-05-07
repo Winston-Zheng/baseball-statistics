@@ -34,17 +34,18 @@ public class PitcherSQL {
     
     public static void createTable(String fileName) {
         String sql = "CREATE TABLE Pitchers ("
-                + "Pitcher_id       INTEGER PRIMARY KEY NOT NULL,"
-                + "First_name       TEXT NOT NULL,"
-                + "Last_name        TEXT NOT NULL,"
-                + "Uniform_number   INTEGER NOT NULL,"
-                + "Times_at_bat     INTEGER,"
-                + "Runs             INTEGER,"
-                + "Hits             INTEGER,"
-                + "Runs_batted_in   INTEGER,"
-                + "Bases_on_balls   INTEGER,"
-                + "Strike_outs      INTEGER,"
-                + "Left_on_base     INTEGER"
+                + "Pitcher_id        INTEGER PRIMARY KEY NOT NULL,"
+                + "First_name        TEXT NOT NULL,"
+                + "Last_name         TEXT NOT NULL,"
+                + "Uniform_number    INTEGER NOT NULL,"
+                + "Innings_pitched   DOUBLE,"
+                + "Hits              INTEGER,"
+                + "Runs              INTEGER,"
+                + "Earned_runs       INTEGER,"
+                + "Bases_on_balls    INTEGER,"
+                + "Strike_outs       INTEGER,"
+                + "Batters_faced     INTEGER,"
+                + "Number_of_pitches INTEGER"
                 + ");";
         try {
             String dbUrl = "jdbc:sqlite:" + fileName + ".sqlite";
@@ -93,19 +94,19 @@ public class PitcherSQL {
         return false;
     }
     
-    public static void addPitcherData(String fileName, String fName, String lName, int uniformNum, 
+    /* Old addPitcherData function addPitcherData(String fileName, String fName, String lName, int uniformNum, 
             int timesAtBat, int runs, int hits, int runsBattedIn, int basesOnBalls, 
-            int strikeOuts, int leftOnBase) {
+            int strikeOuts, int leftOnBase) { */
         // Function to add data into table
         
         // B.R. 5/7/2022 - Had to redo some UserInput codes to collect proper data
         // I will attempt to recreate the String sql to save you some headache
         // inningsPitched is a DOUBLE
         
-        /*
-        addPitcherData(String fileName, String fName, String lName, int uniformNum, 
+        
+        public static void addPitcherData(String fileName, String fName, String lName, int uniformNum, 
             double inningsPitched, int hits, int runs, int earnedRuns, int basesOnBalls, 
-            int strikeOuts, int battersFaced, int numPitches)
+            int strikeOuts, int battersFaced, int numPitches) {
 
         String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
                 + "Innings_pitched, Hits, Runs, Earned_runs, Bases_on_balls, Strike_outs,"
@@ -113,15 +114,15 @@ public class PitcherSQL {
                 + "VALUES ('" + fName + "', '" + lName + "', '" + uniformNum + "', "
                 + "'" + inningsPitched + "', '" + hits + "', '" + runs + "', '" + earnedRuns + "', "
                 + "'" + basesOnBalls + "', '" + strikeOuts + "', "
-                + "'" + battersFaced + "', '" + numPitches+ "',)"; 
-        */
-        String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
+                + "'" + battersFaced + "', '" + numPitches + "')"; 
+        
+        /* old sql String String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
                 + "Times_at_bat, Runs, Hits, Runs_batted_in, Bases_on_balls, Strike_outs,"
                 + "Put_outs, Assists, Left_on_base)"
                 + "VALUES ('" + fName + "', '" + lName + "', '" + uniformNum + "', "
                 + "'" + timesAtBat + "', '" + runs + "', '" + hits + "', '" + runsBattedIn + "', "
                 + "'" + basesOnBalls + "', '" + strikeOuts + "', "
-                + "'" + leftOnBase + "')"; 
+                + "'" + leftOnBase + "')"; */
         
         Connection connection;
         try {
@@ -163,4 +164,11 @@ public class PitcherSQL {
  * Dorian Earl
  * 5/5/2022
  * Added file validation, and made it easier to use all functions.
+ */
+
+/*
+ * Dorian Earl
+ * 5/7/2022
+ * Uncommented new addPitcherData function, debugged sql String for insert data,
+ * and changed createTable to reflect this change.
  */
