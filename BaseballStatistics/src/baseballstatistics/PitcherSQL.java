@@ -98,6 +98,23 @@ public class PitcherSQL {
             int strikeOuts, int leftOnBase) {
         // Function to add data into table
         
+        // B.R. 5/7/2022 - Had to redo some UserInput codes to collect proper data
+        // I will attempt to recreate the String sql to save you some headache
+        // inningsPitched is a DOUBLE
+        
+        /*
+        addPitcherData(String fileName, String fName, String lName, int uniformNum, 
+            double inningsPitched, int hits, int runs, int earnedRuns, int basesOnBalls, 
+            int strikeOuts, int battersFaced, int numPitches)
+
+        String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
+                + "Innings_pitched, Hits, Runs, Earned_runs, Bases_on_balls, Strike_outs,"
+                + "Batters_faced, Number_of_pitches)"
+                + "VALUES ('" + fName + "', '" + lName + "', '" + uniformNum + "', "
+                + "'" + inningsPitched + "', '" + hits + "', '" + runs + "', '" + earnedRuns + "', "
+                + "'" + basesOnBalls + "', '" + strikeOuts + "', "
+                + "'" + battersFaced + "', '" + numPitches+ "',)"; 
+        */
         String sql = "INSERT INTO Pitchers (First_name, Last_name, Uniform_number, "
                 + "Times_at_bat, Runs, Hits, Runs_batted_in, Bases_on_balls, Strike_outs,"
                 + "Put_outs, Assists, Left_on_base)"
