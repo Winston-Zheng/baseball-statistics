@@ -29,10 +29,13 @@ public class Pitcher {
     private int battersFaced;
     // PC/NP
     private int numOfPitches;
+    // ERA
+    private double earnedRunAverage;
     
     public Pitcher(String gameDate, int uniformNumber, String fName, 
             String lName, double inningsPitched, int hits, int runs, int earnedRuns,
-            int basesOnBalls, int strikeOuts, int battersFaced, int numOfPitches) {
+            int basesOnBalls, int strikeOuts, int battersFaced, int numOfPitches, 
+            double earnedRunAverage) {
         this.gameDate = gameDate;
         this.uniformNumber = uniformNumber;
         this.fName = fName;
@@ -45,6 +48,7 @@ public class Pitcher {
         this.strikeOuts = strikeOuts;
         this.battersFaced = battersFaced;
         this.numOfPitches = numOfPitches;
+        this.earnedRunAverage = earnedRunAverage;
     }
     
     public String getGameDate() {
@@ -131,4 +135,10 @@ public class Pitcher {
         this.numOfPitches = numOfPitches;
     }
     
+    public double getEarnedRunAverage() {
+        return earnedRunAverage;
+    }
+    public void setEarnedRunAverage(double earnedRunAverage) {
+        this.earnedRunAverage = earnedRunAverage;
+    }
 }
