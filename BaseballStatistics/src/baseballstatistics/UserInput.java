@@ -1,15 +1,11 @@
-
 package baseballstatistics;
 
 // Brenden Rayburn
 // 4/27/2022
-
 // B.R. 4/27/2022 - Finished the first draft for the GUI elements.
 // still needs input to be verified and proper submit method.
-
 // **CODE TO CAll CLASS**
 // Application.launch(UserInput.class, args)
-
 import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -72,11 +68,11 @@ public class UserInput extends Application {
         grid.add(new Label("Innings Pitched (ip): "), 0, 4);
         inningsPitchedField = new TextField();
         grid.add(inningsPitchedField, 1, 4);
-        
+
         grid.add(new Label("Hits (h): "), 0, 5);
         hitsField = new TextField();
         grid.add(hitsField, 1, 5);
-        
+
         grid.add(new Label("Runs (r): "), 0, 6);
         runsField = new TextField();
         grid.add(runsField, 1, 6);
@@ -88,15 +84,15 @@ public class UserInput extends Application {
         grid.add(new Label("Bases on balls (bb): "), 0, 8);
         basesOnBallsField = new TextField();
         grid.add(basesOnBallsField, 1, 8);
-        
+
         grid.add(new Label("Strike Outs (so): "), 0, 9);
         strikeOutsField = new TextField();
         grid.add(strikeOutsField, 1, 9);
-        
+
         grid.add(new Label("Batters faced (bf): "), 0, 10);
         battersFacedField = new TextField();
         grid.add(battersFacedField, 1, 10);
-        
+
         grid.add(new Label("Number of pitches (pc/np): "), 0, 11);
         numPitchesField = new TextField();
         grid.add(numPitchesField, 1, 11);
@@ -118,96 +114,90 @@ public class UserInput extends Application {
         primaryStage.show();
 
     }
-    
 
     private void submitButtonClicked() {
         LocalDate date = datePicker.getValue();
-        if ( date == null || numberField.getText().isEmpty() ||
-                fNameField.getText().isEmpty() || lNameField.getText().isEmpty() ||
-                inningsPitchedField.getText().isEmpty() || runsField.getText().isEmpty() ||
-                hitsField.getText().isEmpty() || earnedRunsField.getText().isEmpty() ||
-                basesOnBallsField.getText().isEmpty() || numPitchesField.getText().isEmpty() ||
-                strikeOutsField.getText().isEmpty() || battersFacedField.getText().isEmpty()) {
+        if (date == null || numberField.getText().isEmpty()
+                || fNameField.getText().isEmpty() || lNameField.getText().isEmpty()
+                || inningsPitchedField.getText().isEmpty() || runsField.getText().isEmpty()
+                || hitsField.getText().isEmpty() || earnedRunsField.getText().isEmpty()
+                || basesOnBallsField.getText().isEmpty() || numPitchesField.getText().isEmpty()
+                || strikeOutsField.getText().isEmpty() || battersFacedField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please add data to all fields.");
-        }
-        else {
-           if(!isInt(numberField)) { 
+        } else {
+            if (!isInt(numberField)) {
                 numberField.requestFocus();
-           } else if(!isDouble(inningsPitchedField, "You must enter a positive number")) { 
+            } else if (!isDouble(inningsPitchedField, "You must enter a positive number")) {
                 inningsPitchedField.requestFocus();
-           } else if(!isInt(runsField)) { 
+            } else if (!isInt(runsField)) {
                 runsField.requestFocus();
-           } else  if(!isInt(hitsField)) { 
+            } else if (!isInt(hitsField)) {
                 hitsField.requestFocus();
-           } else if(!isInt(earnedRunsField)) { 
+            } else if (!isInt(earnedRunsField)) {
                 earnedRunsField.requestFocus();
-           } else if(!isInt(basesOnBallsField)) { 
+            } else if (!isInt(basesOnBallsField)) {
                 basesOnBallsField.requestFocus();
-           } else if(!isInt(numPitchesField)) {
-               numPitchesField.requestFocus();
-           } else if(!isInt(strikeOutsField)) { 
+            } else if (!isInt(numPitchesField)) {
+                numPitchesField.requestFocus();
+            } else if (!isInt(strikeOutsField)) {
                 strikeOutsField.requestFocus();
-           } else if(!isInt(battersFacedField)) { 
+            } else if (!isInt(battersFacedField)) {
                 battersFacedField.requestFocus();
-           } else {
-               String dateString = date.toString();
-               JOptionPane.showMessageDialog(null, "All data Valid!");
-               PitcherSQL.createDatabase(dateString);
-               
-               String fName = fNameField.getText();
-               String lName = lNameField.getText();
-               int uniformNum = Integer.parseInt(numberField.getText());
-               double inningsPitched = Double.parseDouble(inningsPitchedField.getText());
-               int runs = Integer.parseInt(runsField.getText());
-               int hits = Integer.parseInt(hitsField.getText());
-               int earnedRuns = Integer.parseInt(earnedRunsField.getText());
-               int basesOnBalls = Integer.parseInt(basesOnBallsField.getText());
-               int numPitches = Integer.parseInt(numPitchesField.getText());
-               int strikeOuts = Integer.parseInt(strikeOutsField.getText());
-               int battersFaced = Integer.parseInt(battersFacedField.getText());
-               
-               PitcherSQL.addPitcherData(dateString, fName, lName, uniformNum, inningsPitched,
-                       hits, runs, earnedRuns, basesOnBalls, strikeOuts, battersFaced, numPitches);
-           }
-           
+            } else {
+                String dateString = date.toString();
+                JOptionPane.showMessageDialog(null, "All data Valid!");
+                PitcherSQL.createDatabase(dateString);
+
+                String fName = fNameField.getText();
+                String lName = lNameField.getText();
+                int uniformNum = Integer.parseInt(numberField.getText());
+                double inningsPitched = Double.parseDouble(inningsPitchedField.getText());
+                int runs = Integer.parseInt(runsField.getText());
+                int hits = Integer.parseInt(hitsField.getText());
+                int earnedRuns = Integer.parseInt(earnedRunsField.getText());
+                int basesOnBalls = Integer.parseInt(basesOnBallsField.getText());
+                int numPitches = Integer.parseInt(numPitchesField.getText());
+                int strikeOuts = Integer.parseInt(strikeOutsField.getText());
+                int battersFaced = Integer.parseInt(battersFacedField.getText());
+
+                PitcherSQL.addPitcherData(dateString, fName, lName, uniformNum, inningsPitched,
+                        hits, runs, earnedRuns, basesOnBalls, strikeOuts, battersFaced, numPitches);
+            }
+
         }
     }
 
     private void exitButtonClicked() {
         System.exit(0);
     }
-    
-    private boolean isInt(TextField f) { 
-        try { 
+
+    private boolean isInt(TextField f) {
+        try {
             int i = Integer.parseInt(f.getText());
             if (i >= 0) {
                 return true;
-            }
-            else {
-                JOptionPane.showMessageDialog(null,"You must enter a positive whole number");
+            } else {
+                JOptionPane.showMessageDialog(null, "You must enter a positive whole number");
                 return false;
             }
-        } 
-        catch (NumberFormatException e) { 
-            JOptionPane.showMessageDialog(null,"You must enter a positive whole number"); 
-            return false; 
-        } 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "You must enter a positive whole number");
+            return false;
+        }
     }
-    
-    private boolean isDouble(TextField f, String msg) { 
-        try { 
+
+    private boolean isDouble(TextField f, String msg) {
+        try {
             double i = Double.parseDouble(f.getText());
             if (i >= 0) {
                 return true;
-            }
-            else {
-                JOptionPane.showMessageDialog(null,(msg));
+            } else {
+                JOptionPane.showMessageDialog(null, (msg));
                 return false;
             }
-        } 
-        catch (NumberFormatException e) { 
-            JOptionPane.showMessageDialog(null,(msg)); 
-            return false; 
-        } 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, (msg));
+            return false;
+        }
     }
 }
