@@ -2,8 +2,6 @@ package baseballstatistics;
 
 // Brenden Rayburn
 // 4/27/2022
-// B.R. 4/27/2022 - Finished the first draft for the GUI elements.
-// still needs input to be verified and proper submit method.
 // **CODE TO CAll CLASS**
 // Application.launch(UserInput.class, args)
 import java.time.LocalDate;
@@ -35,6 +33,7 @@ public class UserInput extends Application {
     private DatePicker datePicker = new DatePicker();
     private TextField battersFacedField;
 
+    // run and define the UI elements.
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -98,13 +97,21 @@ public class UserInput extends Application {
         grid.add(numPitchesField, 1, 11);
 
         // Button handler
+        Button clearButton = new Button("Clear data");
+        clearButton.setOnAction(event -> clearData());
+
         Button Submit = new Button("Submit");
         Submit.setOnAction(event -> submitButtonClicked());
 
         Button exitButton = new Button("Exit");
         exitButton.setOnAction(event -> exitButtonClicked());
 
+        Button fullSummaryButton = new Button("Full Pitcher Summary");
+        fullSummaryButton.setOnAction(event -> fullSummaryButtonClicked(primaryStage, scene));
+
         HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().add(fullSummaryButton);
+        buttonBox.getChildren().add(clearButton);
         buttonBox.getChildren().add(Submit);
         buttonBox.getChildren().add(exitButton);
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
@@ -115,8 +122,11 @@ public class UserInput extends Application {
 
     }
 
+    // Once submit button has been clicked, check to see if a value
+    // has been entered for all fields, then verify the data and send to database
     private void submitButtonClicked() {
         LocalDate date = datePicker.getValue();
+        LocalDate currentDate = LocalDate.now();
         if (date == null || numberField.getText().isEmpty()
                 || fNameField.getText().isEmpty() || lNameField.getText().isEmpty()
                 || inningsPitchedField.getText().isEmpty() || runsField.getText().isEmpty()
@@ -125,7 +135,10 @@ public class UserInput extends Application {
                 || strikeOutsField.getText().isEmpty() || battersFacedField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please add data to all fields.");
         } else {
-            if (!isInt(numberField)) {
+            if (date.isAfter(currentDate)) {
+                datePicker.requestFocus();
+                JOptionPane.showMessageDialog(null, "Game date has not happened yet");
+            } else if (!isInt(numberField)) {
                 numberField.requestFocus();
             } else if (!isDouble(inningsPitchedField, "You must enter a positive number")) {
                 inningsPitchedField.requestFocus();
@@ -145,9 +158,7 @@ public class UserInput extends Application {
                 battersFacedField.requestFocus();
             } else {
                 String dateString = date.toString();
-                JOptionPane.showMessageDialog(null, "All data Valid!");
                 PitcherSQL.createDatabase(dateString);
-
                 String fName = fNameField.getText();
                 String lName = lNameField.getText();
                 int uniformNum = Integer.parseInt(numberField.getText());
@@ -162,15 +173,39 @@ public class UserInput extends Application {
 
                 PitcherSQL.addPitcherData(dateString, fName, lName, uniformNum, inningsPitched,
                         hits, runs, earnedRuns, basesOnBalls, strikeOuts, battersFaced, numPitches);
+                JOptionPane.showMessageDialog(null, "Data successfully submitted.");
+                clearData();
             }
 
         }
     }
 
+    private void fullSummaryButtonClicked(Stage primaryStage, Scene scene) {
+        MultipleFilesReader.showSummary(primaryStage, scene);
+    }
+
+    // close UI element when clicked
     private void exitButtonClicked() {
         System.exit(0);
     }
 
+    // clear all textfields when called
+    private void clearData() {
+        numberField.clear();
+        fNameField.clear();
+        lNameField.clear();
+        inningsPitchedField.clear();
+        runsField.clear();
+        hitsField.clear();
+        earnedRunsField.clear();
+        basesOnBallsField.clear();
+        numPitchesField.clear();
+        strikeOutsField.clear();
+        datePicker.getEditor().clear();
+        battersFacedField.clear();
+    }
+
+    // verify if input is a positive whole number
     private boolean isInt(TextField f) {
         try {
             int i = Integer.parseInt(f.getText());
@@ -186,6 +221,7 @@ public class UserInput extends Application {
         }
     }
 
+    // verify if input is a positive number
     private boolean isDouble(TextField f, String msg) {
         try {
             double i = Double.parseDouble(f.getText());
