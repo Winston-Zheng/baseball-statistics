@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,6 +20,7 @@ import java.util.stream.Stream;
 public class FileHelper {
 
     public static void savePitcherData(HashMap<String, ArrayList<ArrayList<Object>>> pitchersArr) {
+
         createDatabase("full_pitchers");
         ArrayList<ArrayList<Object>> combinedPitchersData = new ArrayList<>();
         Double ERA = 0.0;
@@ -60,7 +60,7 @@ public class FileHelper {
                 combinedPitchersData.add(combinedPitcherDatum);
 
             }
-        }
+        };
         for (ArrayList<Object> pitcherData : combinedPitchersData) {
 
             String sql = "INSERT INTO Pitchers (ERA, First_name, Last_name, Uniform_number, "
@@ -87,52 +87,6 @@ public class FileHelper {
                 System.err.println(e);
                 return;
             }
-        }
-
-    }
-
-    private static void createDatabase(String fileName) {
-        // Function to create a new database
-
-        String dbUrl = "jdbc:sqlite:" + fileName + "_summary.sqlite";
-
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl);
-            if (connection != null) {
-                System.out.println("Database has been created.");
-                createTable(fileName);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void createTable(String fileName) {
-        String sql = "CREATE TABLE IF NOT EXISTS Pitchers ("
-                + "Pitcher_id        INTEGER PRIMARY KEY NOT NULL,"
-                + "ERA               DOUBLE,"
-                + "First_name        TEXT NOT NULL,"
-                + "Last_name         TEXT NOT NULL,"
-                + "Uniform_number    INTEGER NOT NULL,"
-                + "Innings_pitched   DOUBLE,"
-                + "Hits              INTEGER,"
-                + "Runs              INTEGER,"
-                + "Earned_runs       INTEGER,"
-                + "Bases_on_balls    INTEGER,"
-                + "Strike_outs       INTEGER,"
-                + "Batters_faced     INTEGER,"
-                + "Number_of_pitches INTEGER"
-                + ");";
-        try {
-            String dbUrl = "jdbc:sqlite:" + fileName + "_summary.sqlite";
-            Connection connection = DriverManager.getConnection(dbUrl);
-
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-
-        } catch (SQLException e) {
-            System.err.println(e);
-            return;
         }
 
     }
@@ -191,23 +145,7 @@ public class FileHelper {
         return fileDataByDate;
     }
 
-    // private functions
-    private static ArrayList<String> getPitcherNamesForOneDate(String dateString) {
-        HashMap<String, ArrayList<ArrayList<Object>>> fileDataByDate = getFileDataMap();
-        ArrayList<ArrayList<Object>> fileDataArr = fileDataByDate.get(dateString);
-        // player names
-        ArrayList<String> playerNames = new ArrayList<>();
-        for (ArrayList<Object> fileDatumArr : fileDataArr) {
-            String name = (fileDatumArr.get(1) + " " + fileDatumArr.get(2)).toLowerCase();
-            if (!playerNames.contains(name)) {
-                playerNames.add(name);
-            }
-        }
-
-        return playerNames;
-    }
-
-    private static HashMap<String, ArrayList<ArrayList<Object>>> getFileDataMap() {
+    public static HashMap<String, ArrayList<ArrayList<Object>>> getFileDataMap() {
         List<String> databaseNames = FileHelper.findFileNames();
 
         HashMap<String, ArrayList<ArrayList<Object>>> filesDataMap = new HashMap<>();
@@ -222,8 +160,8 @@ public class FileHelper {
 
                 ArrayList<ArrayList<Object>> filesData = new ArrayList<>();
 
-                ArrayList<Object> fileData = new ArrayList<>();
                 while (rs.next()) {
+                    ArrayList<Object> fileData = new ArrayList<>();
                     fileData.add(rs.getString("First_name"));
                     fileData.add(rs.getString("Last_name"));
                     fileData.add(rs.getInt("Uniform_number"));
@@ -245,6 +183,22 @@ public class FileHelper {
 
         }
         return filesDataMap;
+    }
+
+    // private functions
+    private static ArrayList<String> getPitcherNamesForOneDate(String dateString) {
+        HashMap<String, ArrayList<ArrayList<Object>>> fileDataByDate = getFileDataMap();
+        ArrayList<ArrayList<Object>> fileDataArr = fileDataByDate.get(dateString);
+        // player names
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (ArrayList<Object> fileDatumArr : fileDataArr) {
+            String name = (fileDatumArr.get(1) + " " + fileDatumArr.get(2)).toLowerCase();
+            if (!playerNames.contains(name)) {
+                playerNames.add(name);
+            }
+        }
+
+        return playerNames;
     }
 
     private static ArrayList<String> findFileNames() {
@@ -285,7 +239,54 @@ public class FileHelper {
 
     }
 
-    //    public static void savePitcherDataForOneDate(String dateString, double era, String fName, String lName,
+    private static void createDatabase(String fileName) {
+        // Function to create a new database
+
+        String dbUrl = "jdbc:sqlite:" + fileName + "_summary.sqlite";
+
+        try {
+            Connection connection = DriverManager.getConnection(dbUrl);
+            if (connection != null) {
+                System.out.println("Database has been created.");
+                createTable(fileName);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void createTable(String fileName) {
+        String sql = "CREATE TABLE IF NOT EXISTS Pitchers ("
+                + "Pitcher_id        INTEGER PRIMARY KEY NOT NULL,"
+                + "ERA               DOUBLE,"
+                + "First_name        TEXT NOT NULL,"
+                + "Last_name         TEXT NOT NULL,"
+                + "Uniform_number    INTEGER NOT NULL,"
+                + "Innings_pitched   DOUBLE,"
+                + "Hits              INTEGER,"
+                + "Runs              INTEGER,"
+                + "Earned_runs       INTEGER,"
+                + "Bases_on_balls    INTEGER,"
+                + "Strike_outs       INTEGER,"
+                + "Batters_faced     INTEGER,"
+                + "Number_of_pitches INTEGER"
+                + ");";
+        try {
+            String dbUrl = "jdbc:sqlite:" + fileName + "_summary.sqlite";
+            Connection connection = DriverManager.getConnection(dbUrl);
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            System.err.println(e);
+            return;
+        }
+
+    }
+
+//    old function 
+//    public static void savePitcherDataForOneDate(String dateString, double era, String fName, String lName,
 //            int uniformNum,
 //            double inningsPitched, int hits, int runs, int earnedRuns, int basesOnBalls,
 //            int strikeOuts, int battersFaced, int numPitches) {
