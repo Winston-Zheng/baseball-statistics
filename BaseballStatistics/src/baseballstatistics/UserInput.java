@@ -32,6 +32,7 @@ public class UserInput extends Application {
     private TextField strikeOutsField;
     private DatePicker datePicker = new DatePicker();
     private TextField battersFacedField;
+    private DatePicker gameDate = new DatePicker();
 
     // run and define the UI elements.
     @Override
@@ -47,7 +48,7 @@ public class UserInput extends Application {
 
         HBox datebox = new HBox(datePicker);
 
-        Scene scene = new Scene(grid, 395, 475);
+        Scene scene = new Scene(grid, 395, 550);
 
         grid.add(new Label("Date of game: "), 0, 0);
         grid.add(datebox, 1, 0);
@@ -108,6 +109,9 @@ public class UserInput extends Application {
 
         Button fullSummaryButton = new Button("Full Pitcher Summary");
         fullSummaryButton.setOnAction(event -> fullSummaryButtonClicked(primaryStage, scene));
+        
+        Button dateSelectButton = new Button("Show Stats For Date");
+        dateSelectButton.setOnAction(event -> dateSelectButtonClicked(primaryStage, scene));
 
         HBox buttonBox = new HBox(10);
         buttonBox.getChildren().add(fullSummaryButton);
@@ -116,7 +120,13 @@ public class UserInput extends Application {
         buttonBox.getChildren().add(exitButton);
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(buttonBox, 0, 12, 2, 1);
-
+        
+        HBox gameDateBox = new HBox(gameDate);
+        grid.add(new Label("Date to search: "), 0, 13);
+        grid.add(gameDateBox, 1, 13);
+        grid.add(dateSelectButton, 1, 14);
+        
+        
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -183,7 +193,18 @@ public class UserInput extends Application {
     private void fullSummaryButtonClicked(Stage primaryStage, Scene scene) {
         MultipleFilesReader.showSummary(primaryStage, scene);
     }
-
+    
+    private void dateSelectButtonClicked(Stage primaryStage, Scene scene) {
+        LocalDate gameDay = gameDate.getValue();
+        if (gameDay == null) {
+            gameDate.requestFocus();
+            JOptionPane.showMessageDialog(null, "Select the date to find stats.");
+        } else {
+            String dateToSearch = gameDate.getValue().toString();
+            MultipleFilesReader.showSummaryForOneDate(primaryStage, scene, dateToSearch);
+        }
+    }
+    
     // close UI element when clicked
     private void exitButtonClicked() {
         System.exit(0);
