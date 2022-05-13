@@ -1,6 +1,5 @@
 package baseballstatistics;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,7 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -143,12 +141,12 @@ public class MultipleFilesReader {
         ObservableList<Pitcher> pitcherData = FileReader.getConnection(dateString);
         TableView<Pitcher> table = new TableView<>();
 
-        primaryStage.setTitle("Full Pitchers Summary");
+        primaryStage.setTitle(dateString + " Summary");
 
         primaryStage.setWidth(1800);
         primaryStage.setHeight(550);
 
-        final Label label = new Label("Full Pitchers Summary");
+        final Label label = new Label(dateString + " Summary");
         Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30);
         label.setFont(font);
         label.setMaxWidth(Double.MAX_VALUE);
@@ -159,7 +157,7 @@ public class MultipleFilesReader {
         TableColumn earnedRunAverageCol = new TableColumn("ERA");
         earnedRunAverageCol.setMinWidth(100);
         earnedRunAverageCol.setCellValueFactory(
-                new PropertyValueFactory<Pitcher, String>("earnedRunAverage"));
+                new PropertyValueFactory<>("earnedRunAverage"));
 
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setMinWidth(150);
