@@ -58,10 +58,10 @@ public class Pitcher {
         this.gameDate = gameDate;
     }
     
-    public int getNumber() {
+    public int getUniformNumber() {
         return uniformNumber;
     }
-    public void setNumber(int number) {
+    public void setUnformNumber(int number) {
         this.uniformNumber = number;
     }
     
@@ -142,3 +142,8 @@ public class Pitcher {
         this.earnedRunAverage = earnedRunAverage;
     }
 }
+
+/*
+ * Dorian Earl - 5/13/2022
+ * Renamed getNumber() and setNumber() to getUnformNumber() and setUniformNumber()
+ */
